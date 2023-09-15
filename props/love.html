@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal 3.0</title>
+    <style>
+        /* Reset default margin and padding for all elements */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .night-mode {
+            background-color: #333; /* Dark background color */
+            color: #fff; /* White text color */
+        }
+
+        /* Theme styles */
+        .theme1 {
+            background-color: #ffd1dc;
+            color: #ff3366;
+        }
+
+        .theme2 {
+            background-color: #87CEEB; /* Light blue background */
+            color: #00688B; /* Dark blue text */
+        }
+
+        .theme3 {
+            background-color: #87CEEB; /* Light blue background */
+            color: #00688B; /* Dark blue text */
+        }
+
+        .theme4 {
+            background-color: #87CEEB; /* Light blue background */
+            color: #00688B; /* Dark blue text */
+        }
+
+        .theme5 {
+            background-color: #87CEEB; /* Light blue background */
+            color: #00688B; /* Dark blue text */
+        }
+
+        /* Apply styles to the body */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Style the container */
+        .container {
+            text-align: center;
+        }
+
+        /* Style the heading */
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        /* Style the paragraphs */
+        p {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+
+        /* Style the heart symbol */
+        .heart {
+            font-size: 5em;
+            animation: heartbeat 1s infinite;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        /* Define the heartbeat animation */
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Style the message paragraph */
+        .message {
+            font-size: 1.2em;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Add hover effect to the heart symbol */
+        .heart:hover {
+            color: #ff0000;
+            transform: scale(1.3);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .modal-message {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .accept-btn {
+            background-color: #ff3366;
+            color: #fff;
+        }
+
+        .decline-btn {
+            background-color: #fff;
+            color: #ff3366;
+            border: 2px solid #ff3366;
+        }
+
+        /* Theme Selector styles */
+        .theme-selector {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        /* Style the Theme Selector dropdown */
+        select {
+            font-size: 1em;
+            padding: 8px;
+            border: none;
+            background-color: #fff;
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Style the Theme Selector label */
+        label {
+            font-size: 1em;
+            color: #333;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="theme1"> <!-- Default theme -->
+
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <label for="themeSelect">Select a Theme:</label>
+        <select id="themeSelect">
+            <option value="theme1">Romantic Pink</option>
+            <option value="theme2">Light Blue</option>
+            <option value="theme3">Theme 3</option>
+            <option value="theme4">Theme 4</option>
+            <option value="theme5">Theme 5</option>
+            <option value="night-mode">Night Mode</option>
+            <!-- Add more theme options here -->
+        </select>
+    </div>
+
+    <div class="container">
+        <h1>Will You Be Mine Forever?</h1>
+        <p>Click the heart below to give your answer!</p>
+        <span class="heart" id="heart">❤️</span>
+        <p class="message">I promise to cherish and adore you every day.</p>
+    </div>
+
+    
+
+    <!-- Modal for the response -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p class="modal-message">Your response:</p>
+            <div class="modal-buttons">
+                <button id="acceptBtn" class="modal-btn accept-btn">Yes, I will!</button>
+                <button id="declineBtn" class="modal-btn decline-btn">I need to think...</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const themeSelect = document.getElementById('themeSelect');
+        const body = document.body;
+        const heart = document.getElementById('heart');
+        const modal = document.getElementById('myModal');
+        const acceptBtn = document.getElementById('acceptBtn');
+        const declineBtn = document.getElementById('declineBtn');
+        const message = document.querySelector('.message');
+
+        themeSelect.addEventListener('change', function () {
+            const selectedTheme = themeSelect.value;
+            body.className = selectedTheme; // Change the body's class to switch themes
+        });
+
+        heart.addEventListener('click', function () {
+            // Display the modal on heart click
+            modal.style.display = 'block';
+        });
+
+        acceptBtn.addEventListener('click', function () {
+            // Update the message and disable further clicks
+            message.textContent = "You've made me the happiest person in the world! 💍";
+            heart.style.pointerEvents = 'none';
+            // Close the modal
+            modal.style.display = 'none';
+        });
+
+        declineBtn.addEventListener('click', function () {
+            // Update the message when "I need to think..." is clicked
+            message.textContent = "Ok no problem, take your time 😘";
+            // Close the modal
+            modal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
